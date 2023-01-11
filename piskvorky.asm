@@ -1,5 +1,4 @@
-;setb p1.0
-clr p1.0
+setb p1.0
 mov r0,#00h
 
 cykl:
@@ -30,47 +29,58 @@ JNB P0.5,nula
 SETB P0.0
 JMP cykl
 
-;###############################
+;#### Funkce Klavesnice ##############
 
 jedna:
 mov r0,#24h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 dva:
 mov r0,#25h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 tri:
 mov r0,#26h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 ctyri:
 mov r0,#34h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 pet:
 mov r0,#35h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 sest:
 mov r0,#36h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 sedm:
 mov r0,#44h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 osm:
 mov r0,#45h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 devet:
 mov r0,#46h
+CJNE @r0, #0, cykl
 jb p0.7,SetPlayer
 
 nula:
+jb p0.7,ClearBoard
 JMP cykl
 
+;####### Nastaveni navesti ###############
 
 SetPlayer:
 jnb p1.0,PlayerB
@@ -79,5 +89,9 @@ clr p1.0
 JMP cykl
 PlayerB:
 mov @r0,#22h
-setb p1.0
+SETB p1.0
 JMP cykl
+
+ClearBoard:
+
+
