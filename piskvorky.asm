@@ -1,5 +1,31 @@
+;### Pocatecni Nastaveni + Pole #####
 setb p1.0
 mov r0,#00h
+jb p0.7,InitializeGameBoard
+
+
+InitializeGameBoard:
+Mov 13h,#0FFh
+Mov 14h,#0FFh
+Mov 15h,#0FFh
+Mov 16h,#0FFh
+Mov 17h,#0FFh
+Mov 23h,#0FFh
+Mov 27h,#0FFh
+Mov 33h,#0FFh
+Mov 37h,#0FFh
+Mov 43h,#0FFh
+Mov 47h,#0FFh
+Mov 53h,#0FFh
+Mov 54h,#0FFh
+Mov 55h,#0FFh
+Mov 56h,#0FFh
+Mov 57h,#0FFh
+
+
+
+
+;############ Klavesnice #############
 
 cykl:
 SETB P0.0
@@ -93,5 +119,10 @@ SETB p1.0
 JMP cykl
 
 ClearBoard:
-
-
+mov R1,#13h
+mov r2,#45h
+SubFunction:
+mov @r1,#00h
+INC r1
+DJNZ R2,SubFunction
+JMP InitializeGameBoard
