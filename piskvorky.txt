@@ -1,0 +1,308 @@
+;### Pocatecni Nastaveni + Pole #####
+mov R1,#13h
+mov r2,#45h
+SubFunction:
+mov @r1,#00h
+INC r1
+DJNZ R2,SubFunction
+
+setb p1.0
+mov r0,#00h
+mov 70h,#11h
+mov p2,#0
+mov p3,#0
+mov p1,#00111111b
+
+jb p1.5,InitializeGameBoard
+
+
+InitializeGameBoard:
+Mov 13h,#0FFh
+Mov 14h,#0FFh
+Mov 15h,#0FFh
+Mov 16h,#0FFh
+Mov 17h,#0FFh
+Mov 23h,#0FFh
+Mov 27h,#0FFh
+Mov 33h,#0FFh
+Mov 37h,#0FFh
+Mov 43h,#0FFh
+Mov 47h,#0FFh
+Mov 53h,#0FFh
+Mov 54h,#0FFh
+Mov 55h,#0FFh
+Mov 56h,#0FFh
+Mov 57h,#0FFh
+
+
+
+
+;############ Kontrola Vyhry #############################
+=========== HRAC 1 ======================
+;############ 4 kombinace Zacinajici Stredem #############
+cykl:
+
+jb p2.4,P1_MidleRow_MidleColumn
+jmp SkipMiddle
+
+P1_MidleRow_MidleColumn:
+jb p2.0,P1_TopRow_TopColumn
+jmp P1_LeftTop_RighBottom_False
+P1_TopRow_TopColumn:
+jb p1.7,sus
+jmp P1_LeftTop_RighBottom_False
+
+;############ Levo nahore -> Pravo Dole #############
+
+P1_Wins:
+ljmp onesWin
+
+P1_LeftTop_RighBottom_False:
+jb p2.1,P1_TopRow_MidleColumn
+jmp P1_MidleColumn_False
+P1_TopRow_MidleColumn:
+jb p2.7,P1_Wins
+jmp P1_MidleColumn_False
+
+;############ Uprodsted nahore -> Uprodsted Dole #############
+
+P1_MidleColumn_False:
+jb p2.2,P1_RightTop_LeftBottom_True
+jmp P1_RightTop_LeftBottom_False
+P1_RightTop_LeftBottom_True:
+jb p2.6,P1_Wins
+jmp P1_RightTop_LeftBottom_False
+
+;############ Pravo nahore -> Levo Dole #############
+
+P1_RightTop_LeftBottom_False:
+jb p2.3,P1_MiddleRow
+jmp SkipMiddle
+P1_MiddleRow:
+jb p2.5,P1_Wins
+jmp P1_Wins
+
+;############ Levo uprodsted -> Pravo uprodsted #############
+
+;############ 2 Kombinace Zacinajici Levo nahore #############
+SkipMiddle:
+
+jb p2.0,P1_LeftTop_LeftBottom_True
+jmp P1_LeftTop_False
+
+P1_LeftTop_LeftBottom_True:
+jb p2.1,P1_TopRow_True
+jmp P1_TopRow_False
+P1_TopRow_True:
+jb p2.2,P1_Wins
+
+;############ Levo nahore -> Pravo nahore #############
+
+P1_TopRow_False:
+jb p2.3,P1_LeftColumn
+jmp P1_LeftTop_False
+P1_LeftColumn:
+jb p2.6,P1_Wins
+
+;############ Levo nahore -> Levo Dole #############
+;############ 2 Kombinace Zacinajici Pravo Dole #############
+P1_LeftTop_False:
+
+
+jb p1.7,P1_BottomRigth_True
+jmp CheckPlayer2
+
+P1_BottomRigth_True:
+jb p2.5,P1_RightCollumn
+jmp P1_RightCollumn_False
+P1_RightCollumn:
+jb p2.2,P1_Wins
+
+;############ Pravo dole -> Pravo nahore #############
+
+P1_RightCollumn_False:
+jb p2.7,P1_BottomRow_True
+jmp CheckPlayer2
+P1_BottomRow_True:
+jb p2.6,P1_Wins
+
+
+
+;############ Pravo dole -> Pravo nahore #############
+;=========== HRAC 2 ======================
+
+CheckPlayer2:
+
+
+SETB P0.0
+SETB P0.1
+SETB P0.2
+CLR P0.3
+
+JNB P0.6,jedna
+JNB P0.5,dva
+JNB P0.4,tri
+SETB P0.3
+CLR P0.2
+
+JNB P0.6,ctyri
+JNB P0.5,pet
+JNB P0.4,sest
+SETB P0.2
+CLR P0.1
+
+JNB P0.6,sedm
+JNB P0.5,osm
+JNB P0.4,devet
+SETB P0.1
+CLR P0.0
+SETB P0.0
+JMP cykl
+
+;#### Funkce Klavesnice ##############
+
+jedna:
+mov r0,#24h
+CJNE @r0, #0, jjedna
+jb p0.7,SetPlayer
+jjedna:
+ljmp cykl
+
+
+dva:
+mov r0,#25h
+CJNE @r0, #0, ddva
+jb p0.7,SetPlayer
+ddva:
+ljmp cykl
+
+tri:
+mov r0,#26h
+CJNE @r0, #0, ttri
+jb p0.7,SetPlayer
+ttri:
+ljmp cykl
+
+ctyri:
+mov r0,#34h
+CJNE @r0, #0, cctyri
+jb p0.7,SetPlayer
+cctyri:
+ljmp cykl
+
+
+pet:
+mov r0,#35h
+CJNE @r0, #0, ppet
+jb p0.7,SetPlayer
+ppet:
+ljmp cykl
+
+
+sest:
+mov r0,#36h
+CJNE @r0, #0, ssest
+jb p0.7,SetPlayer
+ssest:
+ljmp cykl
+
+sedm:
+mov r0,#44h
+CJNE @r0, #0, ssedm
+jb p0.7,SetPlayer
+ssedm:
+ljmp cykl
+
+
+osm:
+mov r0,#45h
+CJNE @r0, #0, oosm
+jb p0.7,SetPlayer
+oosm:
+ljmp cykl
+
+
+devet:
+mov r0,#46h
+CJNE @r0, #0, ddevet
+jb p0.7,SetPlayer
+ddevet:
+ljmp cykl
+;####### Nastaveni navesti ###############
+
+SetPlayer:
+jnb p1.0,PlayerB
+mov @r0,#11h
+mov 70h,#22h
+CJNE r0, #24h,ones24
+setb p2.0
+ones24:
+CJNE r0, #25h,ones25
+setb p2.1
+ones25:
+CJNE r0, #26h,ones26
+setb p2.2
+ones26:
+CJNE r0, #34h,ones34
+setb p2.3
+ones34:
+CJNE r0, #35h,ones35
+setb p2.4
+ones35:
+CJNE r0, #36h,ones36
+setb p2.5
+ones36:
+CJNE r0, #44h,ones44
+setb p2.6
+ones44:
+CJNE r0, #45h,ones45
+setb p2.7
+ones45:
+CJNE r0, #46h,ones46
+setb p1.7
+ones46:
+clr p1.0
+JMP cykl
+PlayerB:
+mov @r0,#22h
+mov 70h,#11h
+CJNE r0, #24h,twos24
+setb p3.0
+twos24:
+CJNE r0, #25h,twos25
+setb p3.1
+twos25:
+CJNE r0, #26h,twos26
+setb p3.2
+twos26:
+CJNE r0, #34h,twos34
+setb p3.3
+twos34:
+CJNE r0, #35h,twos35
+setb p3.4
+twos35:
+CJNE r0, #36h,twos36
+setb p3.5
+twos36:
+CJNE r0, #44h,twos44
+setb p3.6
+twos44:
+CJNE r0, #45h,twos45
+setb p3.7
+twos45:
+CJNE r0, #46h,twos46
+setb p1.6
+twos46:
+clr p1.0
+SETB p1.0
+JMP cykl
+
+
+
+onesWin:
+mov p1,#11111001b
+jmp game
+twosWin:
+mov p1,#10100100b
+game:
+end
