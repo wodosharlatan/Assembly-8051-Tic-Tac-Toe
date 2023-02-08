@@ -1,10 +1,10 @@
 # 8051 Assembly Tic Tac Toe Documentation
-# Introduction
+Introduction
 
-## This assembly code is written for 8051 microcontroller and implements a Tic Tac Toe game logic.
+This assembly code is written for 8051 microcontroller and implements a Tic Tac Toe game logic.
 ## Memory Usage
 
-## The code uses several memory locations to store values for game variables and flags. Some of the memory locations used in this code are:
+The code uses several memory locations to store values for game variables and flags. Some of the memory locations used in this code are:
 
     R1: Used to store the value of the game board position being currently checked
     R2: Used to store the number of iterations for the game board reset loop
@@ -39,6 +39,6 @@ The game board is reset at the beginning of each game iteration. The code resets
 Game Play
 
 The game play is implemented in the section of code starting with the label SETB P0.0. Here, the code sets flags in P0 to indicate the player's turn and allows players to make their moves by setting values in P1, P2, and P3.
-Conclusion
+## Conclusion
 
 ### This code implements the Tic Tac Toe game logic and allows two players to play the game on an 8051 microcontroller. The code uses several memory locations to store values for game variables and flags and implements a loop to check for winning conditions.
