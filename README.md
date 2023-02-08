@@ -41,4 +41,4 @@ Game Play
 The game play is implemented in the section of code starting with the label SETB P0.0. Here, the code sets flags in P0 to indicate the player's turn and allows players to make their moves by setting values in P1, P2, and P3.
 ## Conclusion
 
-### This code implements the Tic Tac Toe game logic and allows two players to play the game on an 8051 microcontroller. The code uses several memory locations to store values for game variables and flags and implements a loop to check for winning conditions.
+This code implements the Tic Tac Toe game logic and allows two players to play the game on an 8051 microcontroller. The code uses several memory locations to store values for game variables and flags and implements a loop to check for winning conditions.
